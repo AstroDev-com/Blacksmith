@@ -1,0 +1,194 @@
+/* RTL Layout Styles */
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Header Layout */
+.rtl .header-right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rtl .header-left {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+/* User Menu */
+.rtl .user-menu {
+    flex-direction: row-reverse;
+}
+
+/* Dropdown Menu */
+.rtl .dropdown-menu {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .dropdown-item {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 0.5rem 1rem !important;
+}
+
+.rtl .dropdown-item i {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+    order: 2 !important;
+}
+
+.rtl .dropdown-item span {
+    order: 1 !important;
+    flex: 1 !important;
+}
+
+/* Buttons and Icons */
+.rtl .btn,
+.rtl .notification-btn,
+.rtl .language-switcher {
+    text-align: right;
+}
+
+.rtl .btn i,
+.rtl .notification-btn i,
+.rtl .language-switcher i {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+/* Search Box */
+.rtl .input-group {
+    flex-direction: row-reverse;
+}
+
+.rtl .search-box .btn {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.rtl .search-box .form-control {
+    border-radius: 0 0.25rem 0.25rem 0;
+    text-align: right;
+}
+
+/* Dropdown Arrow */
+.rtl .dropdown-toggle::after {
+    margin-left: 0;
+    margin-right: 0.255em;
+}
+
+/* User Info */
+.rtl .user-menu .d-none.d-md-block {
+    text-align: right;
+    margin-right: 0.5rem;
+    margin-left: 0;
+}
+
+/* Card Content */
+.rtl .card {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card * {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.rtl .card-header,
+.rtl .card-body,
+.rtl .card-footer {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card-title,
+.rtl .card-text {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card .list-group-item {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card .table {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card .table th,
+.rtl .card .table td {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Form Elements in Cards */
+.rtl .card .form-group,
+.rtl .card .form-control,
+.rtl .card .form-label,
+.rtl .card .input-group {
+    text-align: right;
+    direction: rtl;
+}
+
+.rtl .card .form-check {
+    padding-right: 1.5em;
+    padding-left: 0;
+}
+
+.rtl .card .form-check-input {
+    margin-right: -1.5em;
+    margin-left: 0;
+}
+
+/* Card Lists and Grids */
+.rtl .card .list-group,
+.rtl .card .row,
+.rtl .card .col {
+    direction: rtl;
+}
+
+.rtl .card .list-group-item {
+    padding-right: 1.25rem;
+    padding-left: 0;
+}
+
+/* Flex Containers in Cards */
+.rtl .card .d-flex,
+.rtl .card .flex-row {
+    flex-direction: row-reverse !important;
+}
+
+.rtl .card .justify-content-start {
+    justify-content: flex-end !important;
+}
+
+.rtl .card .justify-content-end {
+    justify-content: flex-start !important;
+}
+
+.rtl .card .ms-auto {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
+
+.rtl .card .me-auto {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .rtl .header-right,
+    .rtl .header-left {
+        margin: 0;
+    }
+
+    .rtl .user-menu {
+        justify-content: flex-end;
+    }
+}

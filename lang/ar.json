@@ -1,0 +1,14 @@
+{
+    "Dashboard": "لوحة التحكم",
+    "Profile": "الملف الشخصي",
+    "Log Out": "تسجيل الخروج",
+    "Language": "اللغة",
+    "dashboard.toggle_menu": "إخفاء/إظهار القائمة",
+    "dashboard.search": "بحث...",
+    "dashboard.arabic": "العربية",
+    "dashboard.english": "English",
+    "dashboard.no_role": "بدون دور",
+    "dashboard.profile": "الملف الشخصي",
+    "dashboard.settings": "الإعدادات",
+    "dashboard.logout": "تسجيل الخروج"
+}

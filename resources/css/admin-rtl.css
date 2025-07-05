@@ -1,0 +1,68 @@
+/* RTL Layout Styles */
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl .header-right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rtl .header-left {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.rtl .user-menu {
+    flex-direction: row-reverse;
+}
+
+.rtl .dropdown-menu {
+    text-align: right;
+}
+
+/* Icon Alignment for RTL */
+.rtl .dropdown-item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.rtl .dropdown-item i {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+.rtl .btn i,
+.rtl .notification-btn i,
+.rtl .language-switcher i {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+.rtl .input-group {
+    flex-direction: row-reverse;
+}
+
+.rtl .search-box .btn {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.rtl .search-box .form-control {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Fix dropdown arrow position */
+.rtl .dropdown-toggle::after {
+    margin-left: 0;
+    margin-right: 0.255em;
+}
+
+/* Mobile Responsive RTL */
+@media (max-width: 768px) {
+    .rtl .header-right,
+    .rtl .header-left {
+        margin: 0;
+    }
+}

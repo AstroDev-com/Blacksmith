@@ -1,0 +1,14 @@
+{
+    "Dashboard": "Dashboard",
+    "Profile": "Profile",
+    "Log Out": "Log Out",
+    "Language": "Language",
+    "dashboard.toggle_menu": "Toggle Menu",
+    "dashboard.search": "Search...",
+    "dashboard.arabic": "Arabic",
+    "dashboard.english": "English",
+    "dashboard.no_role": "No Role",
+    "dashboard.profile": "Profile",
+    "dashboard.settings": "Settings",
+    "dashboard.logout": "Logout"
+}
