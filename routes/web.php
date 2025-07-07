@@ -84,6 +84,8 @@ Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']
 Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::get('/', [homeController::class, 'Index'] )->name('home');
+Route::view('/about', 'frontend.about')->name('about');
+Route::view('/gallery', 'frontend.gallery')->name('gallery');
 
 Route::group(['prefix' => 'admin'], function () {
 
@@ -109,3 +111,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::get('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.delete');
 });
+
+// صفحة اتصل بنا (عرض النموذج)
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'show'])->name('contact.show');
+// إرسال نموذج اتصل بنا
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
