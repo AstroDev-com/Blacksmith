@@ -1676,7 +1676,10 @@ a:hover {
 }
 
 .image-wrap-2 {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     overflow: hidden;
     top: 0;
     left: 0;
@@ -1698,6 +1701,10 @@ a:hover {
 }
 
 .image-wrap-2 img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
     /* filter: url(filters.svg#grayscale); Firefox 3.5+ */
     filter: none !important;
     /* IE5+ */
