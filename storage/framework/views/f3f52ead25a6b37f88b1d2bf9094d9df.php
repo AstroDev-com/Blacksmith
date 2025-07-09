@@ -14,7 +14,7 @@
                 <li><a href="<?php echo e(route('gallery')); ?>">المعرض</a></li>
                 
                 <li><a href="<?php echo e(route('about')); ?>">من نحن</a></li>
-                <li><a href="<?php echo e(route('contact.show')); ?>">اتصل بنا</a></li>
+                
               </ul>
             </nav>
           </div>

@@ -36,4 +36,5 @@
     </form>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('admin.layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\All My Project\GitHub_Project\Alqadsy\Blacksmith\resources\views/admin/categories/create.blade.php ENDPATH**/ ?>

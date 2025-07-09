@@ -10,12 +10,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use \ArPHP\I18N\Arabic;
+use \Kwn\Arabic\Text\ArabicShaper;
+use \Kwn\Arabic\Text\Glyphs;
 
 class ProductController extends Controller
 {
-     public function index()
+    public function index()
     {
-            $products = Product::with('category')->get();
+        $products = Product::with('category')->get();
         return view('admin.products.index', compact('products'));
     }
     public function create()
@@ -23,7 +26,7 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
-        public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:products',
@@ -36,6 +39,20 @@ class ProductController extends Controller
         $imageName = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
+            // تحقق من أن الملف موجود فعلاً
+            if (!file_exists($image->getRealPath())) {
+                return redirect()->back()->withErrors(['image' => 'لم يتم العثور على الملف المؤقت للصورة.']);
+            }
+            // تحقق من أن الملف صورة صالحة
+            $imageInfo = @getimagesize($image->getRealPath());
+            if ($imageInfo === false) {
+                return redirect()->back()->withErrors(['image' => 'الملف المرفوع ليس صورة صالحة أو تالف.']);
+            }
+            // تحقق من نوع الصورة المدعوم
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!in_array($image->getMimeType(), $allowedTypes)) {
+                return redirect()->back()->withErrors(['image' => 'نوع الصورة غير مدعوم.']);
+            }
             $filename = Str::slug($request->name) . '-' . time() . '.' . $image->getClientOriginalExtension();
             $manager = new ImageManager(new Driver());
             $img = $manager->read($image->getRealPath());
@@ -43,16 +60,26 @@ class ProductController extends Controller
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
+            // إضافة العلامة المائية النصية أسفل منتصف الصورة
+            $text = 'Al-Qadasi Workshop, Tel: 771177763';
+            $img->text($text, $img->width() / 2, $img->height() - 20, function ($font) {
+                $font->file(public_path('fonts/Amiri-Regular.ttf'));
+                $font->size(36);
+                $font->color('#ffffff');
+                $font->align('center');
+                $font->valign('bottom');
+                $font->angle(0);
+            });
             $watermarkPath = public_path('watermark.png');
             if (file_exists($watermarkPath)) {
-                $img->insert($watermarkPath, 'bottom-right', 10, 10);
+                $img->place($watermarkPath, 'bottom-right', 10, 10);
             }
-            $publicPath = public_path('imges/prodecuts');
+            $publicPath = public_path('images/products');
             if (!file_exists($publicPath)) {
                 mkdir($publicPath, 0777, true);
             }
             $img->save($publicPath . '/' . $filename);
-            $imageName = 'imges/prodecuts/' . $filename;
+            $imageName = 'images/products/' . $filename;
         }
 
         $product = new Product();
@@ -76,7 +103,7 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-        public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required|unique:products,name,' . $product->id,
@@ -89,9 +116,23 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             // حذف الصورة القديمة إذا كانت موجودة
             if ($product->image && file_exists(public_path($product->image))) {
-                unlink(public_path($product->image));
+                @unlink(public_path($product->image));
             }
             $image = $request->file('image');
+            // تحقق من أن الملف موجود فعلاً
+            if (!file_exists($image->getRealPath())) {
+                return redirect()->back()->withErrors(['image' => 'لم يتم العثور على الملف المؤقت للصورة.']);
+            }
+            // تحقق من أن الملف صورة صالحة
+            $imageInfo = @getimagesize($image->getRealPath());
+            if ($imageInfo === false) {
+                return redirect()->back()->withErrors(['image' => 'الملف المرفوع ليس صورة صالحة أو تالف.']);
+            }
+            // تحقق من نوع الصورة المدعوم
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!in_array($image->getMimeType(), $allowedTypes)) {
+                return redirect()->back()->withErrors(['image' => 'نوع الصورة غير مدعوم.']);
+            }
             $filename = Str::slug($request->name) . '-' . time() . '.' . $image->getClientOriginalExtension();
             $manager = new ImageManager(new Driver());
             $img = $manager->read($image->getRealPath());
@@ -99,16 +140,26 @@ class ProductController extends Controller
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
+            // إضافة العلامة المائية النصية أسفل منتصف الصورة
+            $text = 'Al-Qadasi Workshop, Tel: 771177763';
+            $img->text($text, $img->width() / 2, $img->height() - 20, function ($font) {
+                $font->file(public_path('fonts/Amiri-Regular.ttf'));
+                $font->size(36);
+                $font->color('#ffffff');
+                $font->align('center');
+                $font->valign('bottom');
+                $font->angle(0);
+            });
             $watermarkPath = public_path('watermark.png');
             if (file_exists($watermarkPath)) {
-                $img->insert($watermarkPath, 'bottom-right', 10, 10);
+                $img->place($watermarkPath, 'bottom-right', 10, 10);
             }
-            $publicPath = public_path('imges/prodecuts');
+            $publicPath = public_path('images/products');
             if (!file_exists($publicPath)) {
                 mkdir($publicPath, 0777, true);
             }
             $img->save($publicPath . '/' . $filename);
-            $product->image = 'imges/prodecuts/' . $filename;
+            $product->image = 'images/products/' . $filename;
         }
 
         $product->name = $request->name;
@@ -123,9 +174,11 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-
+        // حذف صورة المنتج من الملفات إذا كانت موجودة
+        if ($product->image && file_exists(public_path($product->image))) {
+            @unlink(public_path($product->image));
+        }
         $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
     }
-
 }

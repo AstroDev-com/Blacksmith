@@ -1,3 +1,40 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.7;
+    color: #777;
+    font-weight: 300;
+    font-size: 1rem;
+    background: #000;
+}
+
+/* يجب أن يكون هناك عنصر رئيسي للمحتوى يحمل هذا الكلاس */
+.main-content {
+    flex: 1 0 auto;
+}
+
+.site-wrap {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer {
+    margin-top: auto;
+}
+
 /* Base */
 body {
     line-height: 1.7;
@@ -169,7 +206,8 @@ a:hover {
     border-top: 1px solid #edf0f5 !important;
 }
 
-.site-footer {
+.site-footer, footer {
+    flex-shrink: 0;
     padding: 4em 0;
     background: #333333;
 }

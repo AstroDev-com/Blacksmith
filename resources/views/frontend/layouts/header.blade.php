@@ -14,7 +14,7 @@
                 <li><a href="{{ route('gallery') }}">المعرض</a></li>
                 {{-- <li><a href="services.html">الخدمات</a></li> --}}
                 <li><a href="{{ route('about') }}">من نحن</a></li>
-                <li><a href="{{ route('contact.show') }}">اتصل بنا</a></li>
+                {{-- <li><a href="{{ route('contact.show') }}">اتصل بنا</a></li> --}}
               </ul>
             </nav>
           </div>

@@ -1,40 +1,73 @@
 @extends('admin.layouts.master')
 
 @section('content')
-    <div class="container">
-        <h1>إنشاء فئة</h1>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-header bg-success text-white d-flex align-items-center">
+                        <i class="fa fa-plus-circle me-2"></i>
+                        <h4 class="mb-0">إنشاء فئة جديدة</h4>
+                    </div>
+                    <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('admin.categories.store') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3 row align-items-center">
+                                <label for="name" class="col-sm-2 col-form-label">الاسم <span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" id="name" class="form-control" required
+                                        value="{{ old('name') }}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row align-items-center">
+                                <label for="description" class="col-sm-2 col-form-label">الوصف <span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="description" id="description" class="form-control" required
+                                        value="{{ old('description') }}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row align-items-center">
+                                <label for="image" class="col-sm-2 col-form-label">الصورة</label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="image" id="image" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3 row align-items-center">
+                                <label for="status" class="col-sm-2 col-form-label">الحالة <span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <select name="status" id="status" class="form-select" required>
+                                        <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>نشط</option>
+                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>غير نشط</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary me-2"> <i
+                                        class="fa fa-arrow-right me-1"></i> عودة</a>
+                                <button type="submit" class="btn btn-success px-4">
+                                    <i class="fa fa-check-circle me-1"></i> إنشاء
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <form action="{{ route('admin.categories.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="form-group">
-            <label for="name">الاسم</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="description">الوصف</label>
-            <input type="text" name="description" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="image">الصورة</label>
-            <input type="file" name="image" class="form-control" >
-        </div>
-        <div class="form-group">
-            <label for="status">الحالة</label>
-            <select name="status" class="form-control" required>
-                <option value="1">نشط</option>
-                <option value="0">غير نشط</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">إنشاء</button>
-    </form>
-
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+@endpush

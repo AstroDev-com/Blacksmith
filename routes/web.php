@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Frontend\homeController;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -12,10 +11,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\NotificationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\MessageController;
-use Doctrine\DBAL\Schema\Index;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 
@@ -73,21 +70,6 @@ Route::group([
     Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
     Route::post('/messages/{message}/mark-as-read', [MessageController::class, 'markAsRead'])->name('messages.markAsRead');
     Route::post('/messages/{message}/archive', [MessageController::class, 'archive'])->name('messages.archive');
-});
-
-require __DIR__ . '/auth.php';
-
-
-// Keep existing login/logout routes if standard auth is used
-Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-Route::get('/', [homeController::class, 'Index'] )->name('home');
-Route::view('/about', 'frontend.about')->name('about');
-Route::view('/gallery', 'frontend.gallery')->name('gallery');
-
-Route::group(['prefix' => 'admin'], function () {
 
     // ======================================  ::       categories      :: ======================================
     Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
@@ -98,10 +80,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
 
-});
-
-Route::group(['prefix' => 'admin'], function () {
-
     // ======================================  ::       products      :: ======================================
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
@@ -109,8 +87,22 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/products/{product}/show', [ProductController::class, 'show'])->name('admin.products.show');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-    Route::get('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.delete');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 });
+
+require __DIR__ . '/auth.php';
+
+
+Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+Route::get('/', [homeController::class, 'Index'])->name('home');
+Route::view('/about', 'frontend.about')->name('about');
+Route::get('/gallery', [\App\Http\Controllers\Frontend\homeController::class, 'gallery'])->name('gallery');
+Route::get('/category/{category}', [\App\Http\Controllers\Frontend\homeController::class, 'productsByCategory'])->name('frontend.category.products');
+Route::get('/product/{product}', [\App\Http\Controllers\Frontend\homeController::class, 'showProduct'])->name('frontend.product.show');
+
 
 // صفحة اتصل بنا (عرض النموذج)
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'show'])->name('contact.show');

@@ -119,4 +119,9 @@ return [
     'delete' => 'حذف',
     'details' => 'التفاصيل',
 
+
+    'current_image' => 'الصورة الحالية',
+    'new_image_preview' => ' جديدة',
+
+
 ];

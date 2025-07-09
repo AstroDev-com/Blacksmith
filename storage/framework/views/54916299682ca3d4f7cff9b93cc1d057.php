@@ -7,9 +7,9 @@
           <div class="image-wrap-2">
             <div class="image-info">
               <h2 class="mb-3"><?php echo e($info->name); ?></h2>
-              <a href="single.html" class="btn btn-outline-white py-2 px-4">More Photos</a>
+              <a href="<?php echo e(route('admin.categories.show', $info->id)); ?>" clasMore Photos-outline-white py-2 px-4">عرض المزيد</a>
             </div>
-            <img src="<?php echo e(asset( $info->image)); ?>" alt="Image" class="img-fluid">
+            <img src="<?php echo e(asset($info->image)); ?>" alt="Image" class="img-fluid">
           </div>
       </div>
 
@@ -17,6 +17,7 @@
 
 
 <?php $__env->stopSection(); ?>
+
 
 
 

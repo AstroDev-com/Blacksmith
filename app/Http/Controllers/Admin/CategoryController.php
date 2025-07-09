@@ -5,12 +5,25 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $query = Category::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $categories = $query->orderBy('id', 'desc')->paginate(10);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -31,8 +44,19 @@ class CategoryController extends Controller
         $imageName = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
+            $filename = Str::slug($request->name) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image->getRealPath());
+            $img->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $publicPath = public_path('images/categories');
+            if (!file_exists($publicPath)) {
+                mkdir($publicPath, 0777, true);
+            }
+            $img->save($publicPath . '/' . $filename);
+            $imageName = 'images/categories/' . $filename;
         }
 
         $category = new Category();
@@ -64,14 +88,44 @@ class CategoryController extends Controller
             'status' => 'required|in:1,0',
         ]);
 
-        $category->update($request->all());
+        $imageName = $category->image;
+        if ($request->hasFile('image')) {
+            // حذف الصورة القديمة إذا كانت موجودة
+            if ($category->image && file_exists(public_path($category->image))) {
+                @unlink(public_path($category->image));
+            }
+            $image = $request->file('image');
+            $filename = Str::slug($request->name) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image->getRealPath());
+            $img->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $publicPath = public_path('images/categories');
+            if (!file_exists($publicPath)) {
+                mkdir($publicPath, 0777, true);
+            }
+            $img->save($publicPath . '/' . $filename);
+            $imageName = 'images/categories/' . $filename;
+        }
+
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->image = $imageName;
+        $category->status = $request->status;
+        $category->save();
 
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully');
     }
 
     public function destroy(Category $category)
     {
+        // حذف صورة التصنيف من الملفات إذا كانت موجودة
+        if ($category->image && file_exists(public_path($category->image))) {
+            @unlink(public_path($category->image));
+        }
         $category->delete();
+        return redirect()->route('admin.categories.index')->with('success', 'تم حذف التصنيف بنجاح.');
     }
-
 }
