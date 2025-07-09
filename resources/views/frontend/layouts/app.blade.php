@@ -33,13 +33,13 @@
 
 <body style="font-family: cairo; min-height: 100vh; display: flex; flex-direction: column;">
     <div class="site-wrap" style="flex: 1 0 auto; display: flex; flex-direction: column; min-height: 100vh;">
-        <div class="site-mobile-menu">
+        <div class="site-mobile-menu bg-black text-black">
             <div class="site-mobile-menu-header">
                 <div class="site-mobile-menu-close mt-3">
                     <span class="icon-close2 js-menu-toggle"></span>
                 </div>
             </div>
-            <div class="site-mobile-menu-body"></div>
+            <div class="site-mobile-menu-body text-white bg-black"></div>
         </div>
 
         @include('frontend.layouts.header')
