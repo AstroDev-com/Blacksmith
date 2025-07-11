@@ -186,6 +186,21 @@
         .theme-toggle i {
             font-size: 1.2rem;
         }
+
+        /* تخصيص حجم التشارت الدائري ليكون متناسقًا */
+        #productsByCategoryChart {
+            max-width: 400px;
+            max-height: 400px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        @media (max-width: 576px) {
+            #productsByCategoryChart {
+                max-width: 100% !important;
+                max-height: 250px !important;
+            }
+        }
     </style>
 <?php $__env->stopPush(); ?>
 
@@ -193,7 +208,7 @@
     <div id="admin-home-page">
         <div class="container-fluid">
             <!-- Welcome Card -->
-            <div class="welcome-card card-header mb-4">
+            <div class="welcome-card card-header mb-1">
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <h4 class="mb-1">
@@ -212,7 +227,7 @@
                 <!-- Users Stats Card -->
                 <div class="col-xl-3 col-md-6">
                     <div class="stat-card h-100">
-                        <div class="card-body p-4">
+                        <div class="card-body p-3">
                             <div class="d-flex align-items-center">
                                 <div class="stat-icon text-secondary">
                                     <i class="fas fa-users"></i>
@@ -229,14 +244,14 @@
                 <!-- Placeholder for future Clinic Stats -->
                 <div class="col-xl-3 col-md-6">
                     <div class="stat-card h-100">
-                        <div class="card-body p-4">
+                        <div class="card-body p-3">
                             <div class="d-flex align-items-center">
                                 <div class="stat-icon text-primary">
-                                    <i class="fas fa-user-md"></i>
+                                    <i class="fas fa-tags"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <h6 class="text-muted mb-0">الأطباء</h6>
-                                    <h3 class="fw-bold mb-0">0</h3>
+                                    <h6 class="text-muted mb-0">التصنيفات</h6>
+                                    <h3 class="fw-bold mb-0"><?php echo e($totalCategories ?? 0); ?></h3>
                                 </div>
                             </div>
                         </div>
@@ -244,14 +259,14 @@
                 </div>
                 <div class="col-xl-3 col-md-6">
                     <div class="stat-card h-100">
-                        <div class="card-body p-4">
+                        <div class="card-body p-3">
                             <div class="d-flex align-items-center">
                                 <div class="stat-icon text-success">
-                                    <i class="fas fa-calendar-check"></i>
+                                    <i class="fas fa-boxes"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <h6 class="text-muted mb-0">المواعيد اليوم</h6>
-                                    <h3 class="fw-bold mb-0">0</h3>
+                                    <h6 class="text-muted mb-0">المنتجات</h6>
+                                    <h3 class="fw-bold mb-0"><?php echo e($totalProducts ?? 0); ?></h3>
                                 </div>
                             </div>
                         </div>
@@ -259,17 +274,64 @@
                 </div>
                 <div class="col-xl-3 col-md-6">
                     <div class="stat-card h-100">
-                        <div class="card-body p-4">
+                        <div class="card-body p-3">
                             <div class="d-flex align-items-center">
                                 <div class="stat-icon text-info">
                                     <i class="fas fa-user-injured"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <h6 class="text-muted mb-0">المرضى</h6>
+                                    <h6 class="text-muted mb-0">أخرى</h6>
                                     <h3 class="fw-bold mb-0">0</h3>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Statistics Chart -->
+            <div class="card mb-1">
+                <div class="card-header">
+                    <h5 class="mb-0">إحصائيات المنتجات حسب التصنيف</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <canvas id="productsByCategoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جدول أحدث المنتجات -->
+            <div class="card ">
+                <div class="card-header">
+                    <h5 class="mb-0">أحدث المنتجات</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0 text-center align-middle table-sm">
+                            <thead>
+                                <tr>
+                                    <th>اسم المنتج</th>
+                                    <th>التصنيف</th>
+                                    <th>تاريخ الإضافة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $__empty_1 = true; $__currentLoopData = $latestProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <tr>
+                                        <td><?php echo e($product->name); ?></td>
+                                        <td><?php echo e($product->category ? $product->category->name : '-'); ?></td>
+                                        <td><?php echo e($product->created_at ? $product->created_at->format('Y-m-d H:i') : '-'); ?>
+
+                                        </td>
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <tr>
+                                        <td colspan="3">لا توجد منتجات حديثة</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -278,6 +340,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Helper functions for displaying SweetAlert messages
         function displaySuccess(message) {
@@ -305,6 +368,46 @@
                 alert('Error: ' + message);
             }
         }
+
+        // تمرير بيانات التصنيفات والإحصائيات من PHP إلى جافاسكريبت
+        window.productStats = <?php echo json_encode($productStats, 15, 512) ?>;
+        document.addEventListener('DOMContentLoaded', function() {
+            const stats = window.productStats || [];
+            const ctx = document.getElementById('productsByCategoryChart').getContext('2d');
+            const labels = stats.map(item => item.name);
+            const data = stats.map(item => item.products_count);
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'عدد المنتجات',
+                        data: data,
+                        backgroundColor: [
+                            '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796',
+                            '#6f42c1', '#fd7e14', '#20c997', '#17a2b8'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    layout: {
+                        padding: 10
+                    }
+                }
+            });
+        });
     </script>
 <?php $__env->stopPush(); ?>
 
