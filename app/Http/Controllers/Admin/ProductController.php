@@ -61,7 +61,8 @@ class ProductController extends Controller
                 $constraint->upsize();
             });
             // إضافة العلامة المائية النصية أسفل منتصف الصورة
-            $text = ' يس دقلا ةشرو, Tel: 771177763';
+            
+            $text = '  Tel: 771177763';
             $img->text($text, $img->width() / 2, $img->height() - 300, function ($font) {
                 $font->file(public_path('fonts/Amiri-Regular.ttf'));
                 $font->size(36);

@@ -1,5 +1,4 @@
-@extends('frontend.layouts.app')
-@section('content')
+<?php $__env->startSection('content'); ?>
  <div class="site-wrap">
 
     <div class="site-section"  data-aos="fade">
@@ -36,7 +35,7 @@
             <p class="mb-4">لوريم إيبسوم هو نص شكلي يُستخدم في صناعة الطباعة والتنضيد. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر.</p>
             <p>
               <a href="#" class="pl-3 pr-3"><span class="icon-whatsapp"></span></a>
-              <a href="https://www.facebook.com/share/1EyxBLDgNc/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+              <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
             </p>
           </div>
           <div class="col-md-6 col-lg-6 col-xl-4 text-center mb-5">
@@ -45,7 +44,7 @@
             <p class="mb-4">لوريم إيبسوم هو نص شكلي يُستخدم في صناعة الطباعة والتنضيد. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر.</p>
             <p>
               <a href="#" class="pl-3 pr-3"><span class="icon-whatsapp"></span></a>
-              <a href="https://www.facebook.com/share/1EyxBLDgNc/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+              <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
             </p>
           </div>
           <div class="col-md-6 col-lg-6 col-xl-4 text-center mb-5">
@@ -54,7 +53,7 @@
             <p class="mb-4">لوريم إيبسوم هو نص شكلي يُستخدم في صناعة الطباعة والتنضيد. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر.</p>
             <p>
               <a href="#" class="pl-3 pr-3"><span class="icon-whatsapp"></span></a>
-              <a href="https://www.facebook.com/share/1EyxBLDgNc/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+              <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
             </p>
           </div>
         </div>
@@ -67,4 +66,6 @@
 
 
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /home/u996342272/domains/alqadsy.com/public_html/resources/views/frontend/about.blade.php ENDPATH**/ ?>
